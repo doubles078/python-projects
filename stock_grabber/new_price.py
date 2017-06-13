@@ -15,7 +15,7 @@ with urllib.request.urlopen("https://coinmarketcap-nexuist.rhcloud.com/api/eth")
 for i in range(stocks_length):
     if stocks[i] != 'ETH':
         stock = yahoo_finance.Share(stocks[i])
-        sheet.cell(row=3 + i, column=7).value = float(stock.get_price())
+        sheet.cell(row=3 + i, column=7).value = float(stock.get_prev_close())
         sheet.cell(row=3 + i, column=9).value = stock.get_percent_change()
     else:
         sheet.cell(row=3 + i, column=7).value = float(daily_eth_price)
