@@ -19,7 +19,15 @@ def insert(item, quantity, price):
     conn.commit()
     conn.close()
 
-insert("Water Glass", 10, 5)
+def delete(item):
+    conn=sqlite3.connect("lite.db")
+    cur=conn.cursor()
+    #Item needs a comma after
+    cur.execute("DELETE FROM store WHERE item=?", (item,))
+    conn.commit()
+    conn.close()
+
+delete("Water Glass")
 
 def view():
     conn=sqlite3.connect("lite.db")
