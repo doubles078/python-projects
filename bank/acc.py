@@ -18,6 +18,9 @@ class Account:
 
 #Showcasing inheritance within OOP
 class Checking(Account):
+    #This is a class variable and is shared by all instances of a class
+    """This is a doc string that helps define what classes are about. Use it like 'checking.__doc___'"""
+    type="checking"
 
     def __init__(self, filepath, fee):
         Account.__init__(self, filepath)
@@ -31,3 +34,4 @@ Checking=Checking("balance.txt", 2)
 Checking.transfer(10)
 Checking.commit()
 print(Checking.balance)
+print(Checking.__doc__)
