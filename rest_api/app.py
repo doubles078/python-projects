@@ -47,7 +47,7 @@ def get_gym(gym_id):
     return jsonify({'gym':gym[0]})
 
 @app.route("/lfd/api/v1.0/gyms/<int:gym_id>", methods=['POST'])
-def get_gym(gym_id):
+def make_gym(gym_id):
     gym = [gym for gym in gyms if gym['id'] == gym_id]
     if len(gym) == 0:
         abort(404)
