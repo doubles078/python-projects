@@ -39,5 +39,16 @@ def setup_db(sqlite_file, table, field, ftype):
     conn.commit()
     conn.close()
 
+def insert_to_db(user, cpu, mem, batt, pluggedin, log, boot):
+    conn = sqlite3.connect('./Workspace/Python/PiMonitor/pimonitor_db.sqlite')
+    c = conn.cursor()
+
+    #Need to fix this so it pulls in correctly.
+    c.execute("INSERT INTO Pi_Stats ('User', 'CPU_Percent', 'Memory_Percent', 'Battery_Percent', 'Plugged_In', 'Log_Date', 'Boot_Date') VALUES (user, cpu, mem, batt, pluggedin, log, boot)")
+
+    # Commit the changes to the database and close the connection
+    conn.commit()
+    conn.close()
+
 if __name__ == '__main__':
     setup_db(sqlite_file, table, new_field, field_type)
