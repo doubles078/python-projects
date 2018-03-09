@@ -5,37 +5,39 @@ table = 'Pi_Stats'
 new_field = 'Key'
 field_type = 'INTEGER'
 
-def open_conn(sqlite_file):
+def create_database(table, field, ftype):
     #Connecting to the database file
-    conn = sqlite3.connect(sqlite_file)
+    conn = sqlite3.connect('./Workspace/Python/PiMonitor/pimonitor_db.sqlite')
     c = conn.cursor()
-
-def close_conn():
+    #Create the table with a primary key column
+    c.execute('CREATE TABLE {tn} ({nf} {ft})' \
+                .format(tn=table, nf=field, ft=ftype))
     # Commit the changes to the database and close the connection
     conn.commit()
     conn.close()
 
-def create_database(table, field, ftype):
-
-
-    #Create the table with a primary key column
-    c.execute('CREATE TABLE {tn} ({nf} {ft})' \
-                .format(tn=table, nf=field, ft=ftype))
-    close_conn()
-
 
 def add_columns(table):
+    #Connecting to the database file
+    conn = sqlite3.connect('./Workspace/Python/PiMonitor/pimonitor_db.sqlite')
+    c = conn.cursor()
     cols = {"User": "TEXT", "CPU_Percent": "REAL", "Memory_Percent": "REAL", "Battery_Percent": "REAL", "Plugged_In": "INTEGER", "Log_Date": "TEXT", "Boot_Date": "TEXT"}
-
-    c.execute("ALTER TABLE {tn} ADD COLUMN '{cn}' {ct}"\
-        .format(tn=table, cn=new_column1, ct=column_type))
+    for key, value in cols.items():
+        c.execute("ALTER TABLE {tn} ADD COLUMN '{cn}' {ct}"\
+            .format(tn=table, cn=key, ct=value))
+    # Commit the changes to the database and close the connection
+    conn.commit()
+    conn.close()
 
 
 def setup_db(sqlite_file, table, field, ftype):
-    open_conn(sqlite_file)
-    create_database(table, field, ftype)
+    #Connecting to the database file
+    conn = sqlite3.connect('./Workspace/Python/PiMonitor/pimonitor_db.sqlite')
+    c = conn.cursor()
     add_columns(table)
-    close_conn()
+    # Commit the changes to the database and close the connection
+    conn.commit()
+    conn.close()
 
 if __name__ == '__main__':
     setup_db(sqlite_file, table, new_field, field_type)
